@@ -1,0 +1,157 @@
+WindowManager:
+    FirstWindow:
+    SecondWindow:
+    ThirdWindow:
+    FourthWindow:
+    FifthWindow:
+
+<FirstWindow>:
+    email:email
+    password:password
+    FloatLayout:
+        size: root.width, root.height
+        Label:
+            text: "Email"
+            id: Email
+            size_hint: 0.2, 0.1
+            pos_hint: {"x":0.25, "top":0.9}
+        TextInput:
+            id: email
+            size_hint: 0.3, 0.1
+            pos_hint: {"x": 0.45, "top": 0.9}
+
+        Label:
+            text: "password"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x":0.25, "top": 0.7}
+
+        TextInput:
+            id: password
+            size_hint: 0.3, 0.1
+            pos_hint: {"x": 0.45, "top":0.7}
+
+        Button:
+            text: "LOGIN"
+            size_hint: 0.3, 0.1
+            pos_hint: {"x": 0.33, "top":0.4}
+            on_press: app.login()
+        Button:
+            text: "submit"
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.33, "top":0.4}
+            on_press:root.submit(email.text,password.text)
+<SecondWindow>:
+    name: "screen_two"
+
+    FloatLayout:
+        Button:
+            text: "CLIENT"
+            size_hint: 0.3, 0.1
+            pos_hint: {"x": 0.35, "top": 0.7}
+            on_release:
+                root.manager.current= "screen_three"
+
+        Button:
+            text: "CLIENT DETAILS"
+            size_hint: 0.3, 0.1
+            pos_hint: {"x": 0.35, "top":0.5}
+            on_release:
+                root.manager.current = "screen_four"
+        Button:
+            text: "search"
+            size_hint: 0.3, 0.1
+            pos_hint: {"x": 0.35, "top":0.3}
+            on_release:
+                root.manager.current = "screen_five"
+
+
+<ThirdWindow>:
+    num:num
+    sch:sch
+    ph:ph
+    email:email
+    addr:addr
+    amount:amount
+
+
+    FloatLayout:
+        GridLayout:
+            cols: 1
+            size: root.width, root.height
+            GridLayout:
+                cols: 2
+                Label:
+                    text:"id"
+                TextInput:
+                    id:num
+                Label:
+                    text:"name"
+                TextInput:
+                    id:sch
+                Label:
+                    text:"phone number"
+                TextInput:
+                    id:ph
+                Label:
+                    text:"email"
+                TextInput:
+                    id:email
+                Label:
+                    text:"address"
+                TextInput:
+                    id:addr
+                Label:
+                    text:"amount"
+                TextInput:
+                    id:amount
+                Button:
+                    text:"login"
+                    on_press:root.submit()
+<FourthWindow>:
+    BoxLayout:
+        GridLayout:
+            size_hint: 1, None
+            size_hint_y: None
+            height: 500
+            cols: 6
+
+            BoxLayout:
+                RecycleView:
+                    viewclass: 'SelectableButton'
+                    data: [{'text':str(x)}for x in root.data_items]
+                    SelectableRecycleGridLayout:
+                        cols: 6
+                        default_size:None,dp(56)
+                        default_size_hint:6, None
+                        size_hint_y: None
+                        height: self.minimum_height
+                        multiselect: True
+                        touch_multiselect: True
+
+        Button:
+            text:"login"
+            size_hint: 0.1, 0.1
+            pos_hint: {"x": 0.33, "top":0.4}
+            on_release:
+                root.manager.current="screen_two"
+
+
+<FifthWindow>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            size_hint_y: None
+            height: sp(52)
+
+            Button:
+                text: 'Icon View'
+                on_press: fc.view_mode = 'icon'
+            Button:
+                text: 'List View'
+                on_press: fc.view_mode = 'list'
+
+    FileChooser:
+        id: fc
+        FileChooserIconLayout
+        FileChooserListLayout
